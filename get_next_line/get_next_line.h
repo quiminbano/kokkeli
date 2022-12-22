@@ -6,19 +6,18 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:00:18 by corellan          #+#    #+#             */
-/*   Updated: 2022/12/18 12:10:53 by corellan         ###   ########.fr       */
+/*   Updated: 2022/12/18 19:10:33 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 42
 # endif
 # define MAX_FILES 200
 
 # include "../ft_printf/ft_printf.h"
-# include "../libft/libft.h"
 
 typedef struct s_struct
 {

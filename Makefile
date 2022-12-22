@@ -5,41 +5,46 @@
 #                                                     +:+ +:+         +:+      #
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/11/21 13:33:33 by corellan          #+#    #+#              #
-#    Updated: 2022/12/19 15:22:16 by corellan         ###   ########.fr        #
+#    Created: 2022/12/19 14:43:17 by corellan          #+#    #+#              #
+#    Updated: 2022/12/19 15:44:03 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
+NAME = pipex
 
-SRC = ft_print_address.c ft_print_hex_u.c ft_print_hex.c ft_printf.c \
-ft_uitoa.c ft_writer.c
+SRC = main.c pipex.c pipex_cont.c pipex_utils.c
 
-OUT = ft_print_address.o ft_print_hex_u.o ft_print_hex.o ft_printf.o \
-ft_uitoa.o ft_writer.o
+SRC_GNL = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
+
+OUT = main.o pipex.o pipex_cont.o pipex_utils.o get_next_line.o \
+get_next_line_utils.o
 
 FLAGS = -Wall -Wextra -Werror
 
-LIB = ft_printf.h
+LIB = pipex.h
+
+LIB_GNL = get_next_line/get_next_line.h
+
+PF = ft_printf/libftprintf.a
+
+TRASH = pipex.h.gch get_next_line/get_next_line.h.gch
 
 CC = cc
 
 all: $(NAME)
 
-$(NAME): $(OUT)
-		$(MAKE) -C ./../libft
-		cp ../libft/libft.a .
-		mv libft.a libftprintf.a
-		$(CC) -c $(FLAGS) -I$(LIB) $(SRC)
-		ar rc $(NAME) $(OUT)
-		ranlib $(NAME)
+$(NAME):
+		$(MAKE) -C ./ft_printf
+		$(CC) -c $(FLAGS) $(LIB) $(SRC)
+		$(CC) -c $(FLAGS) -I$(LIB_GNL) $(SRC_GNL)
+		$(CC) $(FLAGS) $(OUT) $(PF) -o $(NAME)
 
 clean:
-		$(MAKE) clean -C ./../libft
-		rm -f $(OUT)
+		$(MAKE) clean -C ./ft_printf
+		rm -f $(OUT) $(TRASH)
 
 fclean: clean
-		$(MAKE) fclean -C ./../libft
+		$(MAKE) fclean -C ./ft_printf
 		rm -f $(NAME)
 
 re: fclean all
