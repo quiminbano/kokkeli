@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:18:49 by corellan          #+#    #+#             */
-/*   Updated: 2022/12/22 17:50:55 by corellan         ###   ########.fr       */
+/*   Updated: 2022/12/29 11:02:16 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,12 @@ static int	main_aux(int argc, char **argv, char **envp, t_pipex data)
 
 	ret = 0;
 	data.fdinput = open(argv[1], O_RDONLY);
+	data.fdoutput = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (data.fdinput < 0)
 	{
 		ft_printf("%s: %s: %s\n", data.shell, strerror(errno), argv[1]);
-		free(data.shell);
-		return (2);
+		return (ft_error_message(argv, envp, &data));
 	}
-	data.fdoutput = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (data.fdoutput < 0)
 	{
 		ft_printf("%s: %s: %s\n", data.shell, strerror(errno), argv[argc - 1]);

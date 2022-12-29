@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 12:30:20 by corellan          #+#    #+#             */
-/*   Updated: 2022/12/22 17:28:25 by corellan         ###   ########.fr       */
+/*   Updated: 2022/12/23 16:57:50 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ static int	ft_wait_get_path1(t_pipex *data)
 	if (data->path1 == NULL)
 	{
 		ft_printf("%s: command not found: %s\n", data->shell, data->cmd1[0]);
-		free(data->shell);
-		ft_free_split(data->cmd1);
 		return (1);
 	}
 	ft_strlcpy(data->path1, data->path1, ft_strlen(data->path1));
@@ -93,7 +91,7 @@ int	ft_pipex(char **argv, char **envp, t_pipex *data)
 	else
 	{
 		if (ft_wait_get_path1(data) != 0)
-			return (4);
+			return (ft_prepare1(argv, envp, data));
 	}
 	if (ft_openpipe((*data).fd1, data->shell) != 0)
 		return (5);
