@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:18:49 by corellan          #+#    #+#             */
-/*   Updated: 2022/12/29 11:02:16 by corellan         ###   ########.fr       */
+/*   Updated: 2022/12/29 17:34:34 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,26 @@ static void	ft_get_shell(t_pipex *data, char **envp)
 
 static int	main_aux(int argc, char **argv, char **envp, t_pipex data)
 {
-	int		ret;
-
-	ret = 0;
 	data.fdinput = open(argv[1], O_RDONLY);
 	data.fdoutput = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (data.fdinput < 0)
-	{
 		ft_printf("%s: %s: %s\n", data.shell, strerror(errno), argv[1]);
-		return (ft_error_message(argv, envp, &data));
-	}
 	if (data.fdoutput < 0)
 	{
 		ft_printf("%s: %s: %s\n", data.shell, strerror(errno), argv[argc - 1]);
 		free(data.shell);
+		close(data.fdinput);
 		return (3);
 	}
-	ret = ft_pipex(argv, envp, &data);
-	return (ret);
+	if (data.fdinput < 0)
+		return (ft_error_message(argv, envp, &data));
+	return (ft_pipex(argv, envp, &data));
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	int		i;
 	t_pipex	data;
 
-	i = 1;
 	ft_get_shell(&data, envp);
 	if (argc < 5 || argc > 5)
 	{
@@ -70,15 +64,5 @@ int	main(int argc, char **argv, char **envp)
 		free(data.shell);
 		return (1);
 	}
-	while (i < argc)
-	{
-		if (argv[i][0] == '\0')
-		{
-			ft_printf("%s: One of your arguments is empty.\n", data.shell);
-			free(data.shell);
-			return (1);
-		}
-		i++;
-	}	
 	return (main_aux(argc, argv, envp, data));
 }

@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 11:37:09 by corellan          #+#    #+#             */
-/*   Updated: 2022/12/22 17:38:42 by corellan         ###   ########.fr       */
+/*   Updated: 2022/12/29 17:33:24 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	ft_run_route2(char **envp, t_pipex *data)
 	return (0);
 }
 
-static int	ft_wait_get_path2(t_pipex *data)
+static int	ft_wait_get_path2(char **argv, t_pipex *data)
 {
 	wait(NULL);
 	close(data->fd1[1]);
@@ -61,7 +61,10 @@ static int	ft_wait_get_path2(t_pipex *data)
 	data->path2 = get_next_line(data->fd1[0]);
 	if (data->path2 == NULL)
 	{
-		ft_printf("%s: command not found: %s\n", data->shell, data->cmd2[0]);
+		if (argv[3][0] == '"' && argv[3][ft_strlen(argv[3]) - 1] == '"')
+			ft_printf("%s: command not found: %s\n", data->shell, argv[3]);
+		else
+			ft_printf("%s: command not found: %s\n", data->shell, data->cmd2[0]);
 		ft_free_split(data->cmd2);
 		free(data->shell);
 		return (1);
@@ -88,19 +91,21 @@ static int	ft_exec_search_2(char **envp, t_pipex *data)
 
 int	ft_pipex_cont(char **argv, char **envp, t_pipex *data)
 {
-	int	prep3;
-
-	prep3 = 0;
 	if (ft_openpipe((*data).fd1, data->shell) != 0)
 		return (7);
-	ft_identify_route(argv, 3, &(data->cmd2), &(data->temp2));
+	if (ft_identify_route(argv, 3, &(data->cmd2), &(data->temp2)) == 1)
+	{
+		ft_print_error(argv, data->shell, 3);
+		free(data->shell);
+		return (1);
+	}
 	if (ft_forking(&(*data).pid1, data->shell) != 0)
 		return (8);
 	if (data->pid1 == 0)
 		return (ft_exec_search_2(envp, data));
 	else
 	{
-		if (ft_wait_get_path2(data) != 0)
+		if (ft_wait_get_path2(argv, data) != 0)
 			return (9);
 	}
 	if (ft_openpipe((*data).fd1, data->shell) != 0)
@@ -109,7 +114,5 @@ int	ft_pipex_cont(char **argv, char **envp, t_pipex *data)
 		return (11);
 	if (data->pid1 == 0)
 		return (ft_run_route2(envp, data));
-	else
-		prep3 = ft_prepare2(data);
-	return (prep3);
+	return (ft_prepare2(data));
 }

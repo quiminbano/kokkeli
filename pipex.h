@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:06:36 by corellan          #+#    #+#             */
-/*   Updated: 2022/12/29 11:02:56 by corellan         ###   ########.fr       */
+/*   Updated: 2022/12/29 16:20:34 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int		ft_openpipe(int *fd, char *str);
 int		ft_forking(int *pid, char *str);
 void	ft_free_split(char **str);
 int		ft_pipex_cont(char **argv, char **envp, t_pipex *data);
-void	ft_identify_route(char **argv, int prog, char ***cmd, char ***temp);
+int		ft_identify_route(char **argv, int prog, char ***cmd, char ***temp);
 int		ft_error_message(char **argv, char **envp, t_pipex *data);
+void	ft_print_error(char **argv, char *shell, int prog);
 
 #endif

@@ -6,18 +6,18 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/19 14:43:17 by corellan          #+#    #+#              #
-#    Updated: 2022/12/19 15:44:03 by corellan         ###   ########.fr        #
+#    Updated: 2022/12/29 16:12:34 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
-SRC = main.c pipex.c pipex_cont.c pipex_utils.c
+SRC = main.c pipex.c pipex_cont.c pipex_utils.c pipex_error.c
 
 SRC_GNL = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 
 OUT = main.o pipex.o pipex_cont.o pipex_utils.o get_next_line.o \
-get_next_line_utils.o
+get_next_line_utils.o pipex_error.o
 
 FLAGS = -Wall -Wextra -Werror
 

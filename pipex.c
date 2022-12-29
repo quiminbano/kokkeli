@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 12:30:20 by corellan          #+#    #+#             */
-/*   Updated: 2022/12/23 16:57:50 by corellan         ###   ########.fr       */
+/*   Updated: 2022/12/29 17:29:11 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	ft_run_route1(char **envp, t_pipex *data)
 	return (0);
 }
 
-static int	ft_wait_get_path1(t_pipex *data)
+static int	ft_wait_get_path1(char **argv, t_pipex *data)
 {
 	wait(NULL);
 	close(data->fd1[1]);
@@ -53,7 +53,10 @@ static int	ft_wait_get_path1(t_pipex *data)
 	data->path1 = get_next_line(data->fd1[0]);
 	if (data->path1 == NULL)
 	{
-		ft_printf("%s: command not found: %s\n", data->shell, data->cmd1[0]);
+		if (argv[2][0] == '"' && argv[2][(ft_strlen(argv[2])) - 1] == '"')
+			ft_printf("%s: command not found: %s\n", data->shell, argv[2]);
+		else
+			ft_printf("%s: command not found: %s\n", data->shell, data->cmd1[0]);
 		return (1);
 	}
 	ft_strlcpy(data->path1, data->path1, ft_strlen(data->path1));
@@ -78,19 +81,20 @@ static int	ft_exec_search_1(char **envp, t_pipex *data)
 
 int	ft_pipex(char **argv, char **envp, t_pipex *data)
 {
-	int	prep;
-
-	prep = 0;
 	if (ft_openpipe((*data).fd1, data->shell) != 0)
 		return (1);
-	ft_identify_route(argv, 2, &(data->cmd1), &(data->temp1));
+	if (ft_identify_route(argv, 2, &(data->cmd1), &(data->temp1)) == 1)
+	{
+		ft_print_error(argv, data->shell, 2);
+		return (ft_error_message(argv, envp, data));
+	}
 	if (ft_forking(&(*data).pid1, data->shell) != 0)
 		return (2);
 	if (data->pid1 == 0)
 		return (ft_exec_search_1(envp, data));
 	else
 	{
-		if (ft_wait_get_path1(data) != 0)
+		if (ft_wait_get_path1(argv, data) != 0)
 			return (ft_prepare1(argv, envp, data));
 	}
 	if (ft_openpipe((*data).fd1, data->shell) != 0)
@@ -99,7 +103,5 @@ int	ft_pipex(char **argv, char **envp, t_pipex *data)
 		return (6);
 	if (data->pid1 == 0)
 		return (ft_run_route1(envp, data));
-	else
-		prep = ft_prepare1(argv, envp, data);
-	return (prep);
+	return (ft_prepare1(argv, envp, data));
 }

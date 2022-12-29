@@ -6,43 +6,24 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 13:19:11 by corellan          #+#    #+#             */
-/*   Updated: 2022/12/29 11:18:33 by corellan         ###   ########.fr       */
+/*   Updated: 2022/12/29 16:12:41 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_error_message(char **argv, char **envp, t_pipex *data)
-{
-	if (ft_openpipe((*data).fd1, data->shell) != 0)
-		return (1);
-	if (ft_forking(&(*data).pid1, data->shell) != 0)
-		return (2);
-	if (data->pid1 == 0)
-	{
-		close(data->fd1[0]);
-		write(data->fd1[1], "\0", 1);
-		close(data->fd1[1]);
-		return (1);
-	}
-	else
-	{
-		wait(NULL);
-		close(data->fd1[1]);
-		dup2(data->fd1[0], STDIN_FILENO);
-		close(data->fd1[0]);
-		return (ft_pipex_cont(argv, envp, data));
-	}
-	return (1);
-}
-
-void	ft_identify_route(char **argv, int prog, char ***cmd, char ***temp)
+int	ft_identify_route(char **argv, int prog, char ***cmd, char ***temp)
 {
 	char	*t;
 
-	if (ft_strnstr(argv[prog], "awk", ft_strlen(argv[0])) == NULL)
+	if (ft_strnstr(argv[prog], "awk", ft_strlen(argv[prog])) == NULL)
 	{
 		(*cmd) = ft_split(argv[prog], ' ');
+		if ((*cmd)[0] == NULL || argv[prog][0] == '\0')
+		{
+			ft_free_split((*cmd));
+			return (1);
+		}
 		t = ft_strjoin("which ", (*cmd[0]));
 		(*temp) = ft_split(t, ' ');
 		free(t);
@@ -54,6 +35,7 @@ void	ft_identify_route(char **argv, int prog, char ***cmd, char ***temp)
 		(*temp) = ft_split(t, ' ');
 		free(t);
 	}
+	return (0);
 }
 
 void	ft_free_split(char **str)
