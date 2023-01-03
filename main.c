@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:18:49 by corellan          #+#    #+#             */
-/*   Updated: 2022/12/29 17:34:34 by corellan         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:34:21 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	ft_get_shell(t_pipex *data, char **envp)
 static int	main_aux(int argc, char **argv, char **envp, t_pipex data)
 {
 	data.fdinput = open(argv[1], O_RDONLY);
-	data.fdoutput = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0777);
+	data.fdoutput = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (data.fdinput < 0)
 		ft_printf("%s: %s: %s\n", data.shell, strerror(errno), argv[1]);
 	if (data.fdoutput < 0)

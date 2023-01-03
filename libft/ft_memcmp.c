@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:06:31 by corellan          #+#    #+#             */
-/*   Updated: 2022/11/05 15:48:19 by corellan         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:07:40 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_memcmp(const void *str1, const void *str2, size_t n)
 		{
 			s1 = st1[i];
 			s2 = st2[i];
-			return (st1[i] - st2[i]);
+			return (s1 - s2);
 		}
 		i++;
 	}

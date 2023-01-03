@@ -6,7 +6,7 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/01 12:00:04 by corellan          #+#    #+#              #
-#    Updated: 2022/11/08 19:20:49 by corellan         ###   ########.fr        #
+#    Updated: 2023/01/03 11:09:35 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,14 +28,12 @@ ft_strrchr.o ft_strtrim.o ft_substr.o ft_tolower.o ft_toupper.o
 
 FLAGS = -Wall -Wextra -Werror
 
-LIB = libft.h
-
 CC = cc
 
 all: $(NAME)
 
 $(NAME): $(OUT)
-		$(CC) -c $(FLAGS) -I$(LIB) $(SRC)
+		$(CC) -c $(FLAGS) -I. $(SRC)
 		ar rc $(NAME) $(OUT)
 
 clean:

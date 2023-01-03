@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 12:30:20 by corellan          #+#    #+#             */
-/*   Updated: 2022/12/29 17:29:11 by corellan         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:24:14 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static int	ft_prepare1(char **argv, char **envp, t_pipex *data)
 	int	prep2;
 
 	prep2 = 0;
-	wait(NULL);
 	close(data->fd1[1]);
 	dup2(data->fd1[0], STDIN_FILENO);
 	close(data->fd1[0]);

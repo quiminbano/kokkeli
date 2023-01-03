@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 11:16:57 by corellan          #+#    #+#             */
-/*   Updated: 2022/11/05 18:11:57 by corellan         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:06:31 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,7 @@ char	*ft_itoa(int n)
 {
 	char	*digit;
 	int		l;
-	int		num;
 
-	num = 0;
 	l = ft_intlen(n);
 	digit = (char *)malloc(sizeof(char) * (l + 1));
 	if (digit == NULL)

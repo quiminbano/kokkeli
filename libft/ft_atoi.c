@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:28:40 by corellan          #+#    #+#             */
-/*   Updated: 2022/11/06 13:41:23 by corellan         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:07:22 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_atoi_pos(char const *str, int i, int counter, int neg)
 		num += (str[i] - '0');
 		i++;
 	}
-	num *= neg;
+	num *= negative;
 	if ((i - counter) >= 20)
 		return (-1);
 	else if (num < 0)
@@ -54,7 +54,7 @@ static int	ft_atoi_neg(char const *str, int i, int counter, int neg)
 		num += (str[i] - '0');
 		i++;
 	}
-	num *= neg;
+	num *= negative;
 	if ((i - counter) >= 20)
 		return (0);
 	else if (num > 0)

@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 13:19:11 by corellan          #+#    #+#             */
-/*   Updated: 2022/12/29 16:12:41 by corellan         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:42:13 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,15 @@ int	ft_identify_route(char **argv, int prog, char ***cmd, char ***temp)
 {
 	char	*t;
 
-	if (ft_strnstr(argv[prog], "awk", ft_strlen(argv[prog])) == NULL)
+	(*cmd) = ft_split(argv[prog], ' ');
+	if ((*cmd)[0] == NULL || argv[prog][0] == '\0')
 	{
-		(*cmd) = ft_split(argv[prog], ' ');
-		if ((*cmd)[0] == NULL || argv[prog][0] == '\0')
-		{
-			ft_free_split((*cmd));
-			return (1);
-		}
-		t = ft_strjoin("which ", (*cmd[0]));
-		(*temp) = ft_split(t, ' ');
-		free(t);
+		ft_free_split((*cmd));
+		return (1);
 	}
-	else
-	{
-		(*cmd) = ft_split(argv[prog], 39);
-		t = ft_strjoin("which ", "awk");
-		(*temp) = ft_split(t, ' ');
-		free(t);
-	}
+	t = ft_strjoin("which ", (*cmd[0]));
+	(*temp) = ft_split(t, ' ');
+	free(t);
 	return (0);
 }
 

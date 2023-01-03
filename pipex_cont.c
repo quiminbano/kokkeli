@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 11:37:09 by corellan          #+#    #+#             */
-/*   Updated: 2022/12/29 17:33:24 by corellan         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:08:39 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	ft_wait_get_path2(char **argv, t_pipex *data)
 {
 	wait(NULL);
 	close(data->fd1[1]);
-	free(data->temp2);
+	ft_free_split(data->temp2);
 	data->path2 = get_next_line(data->fd1[0]);
 	if (data->path2 == NULL)
 	{

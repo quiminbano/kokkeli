@@ -6,7 +6,7 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/21 13:33:33 by corellan          #+#    #+#              #
-#    Updated: 2022/12/19 15:22:16 by corellan         ###   ########.fr        #
+#    Updated: 2023/01/03 11:10:38 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,17 +20,14 @@ ft_uitoa.o ft_writer.o
 
 FLAGS = -Wall -Wextra -Werror
 
-LIB = ft_printf.h
-
 CC = cc
 
 all: $(NAME)
 
 $(NAME): $(OUT)
 		$(MAKE) -C ./../libft
-		cp ../libft/libft.a .
-		mv libft.a libftprintf.a
-		$(CC) -c $(FLAGS) -I$(LIB) $(SRC)
+		cp ../libft/libft.a libftprintf.a
+		$(CC) -c $(FLAGS) -I. $(SRC)
 		ar rc $(NAME) $(OUT)
 		ranlib $(NAME)
 
